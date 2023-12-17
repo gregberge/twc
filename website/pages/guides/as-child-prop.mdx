@@ -1,0 +1,28 @@
+# The `asChild` prop
+
+`twc` offers a flexible way to reuse your classes on another component using the `asChild` prop. This prop allows you to replace the default component with a custom child element while keeping the defined classes.
+
+## Usage
+
+Take a `Link` component defines in your app:
+
+```ts filename="components/link.ts"
+import { twc } from "react-twc";
+
+const Link = twc.a`underline text-blue-800 hover:text-blue-900`;
+```
+
+You can reuse the style for a `next/link`, it is possible using `asChild` prop:
+
+```tsx filename="app.tsx"
+import NextLink from "next/link";
+import { Link } from "./components/link";
+
+function App() {
+  return (
+    <Link asChild>
+      <NextLink href="/">Go home</NextLink>
+    </Link>
+  );
+}
+```

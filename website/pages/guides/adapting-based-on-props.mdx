@@ -1,0 +1,54 @@
+# Adapting based on props
+
+You can pass a function to `twc` to adapt the components based on props.
+
+## Usage
+
+This button component has a primary state that changes its color. When setting the `$primary` prop to true, we are changing its style.
+
+```tsx
+import { twc } from "react-twc";
+
+type ButtonProps = React.ComponentProps<"button"> & { $primary?: boolean };
+
+const Button = twc.button<ButtonProps>((props) => [
+  "font-semibold border border-blue-500 rounded",
+  props.$primary ? "bg-blue-500 text-white" : "bg-white text-gray-800",
+]);
+
+render(
+  <div>
+    <Button>Normal</Button>
+    <Button $primary>Primary</Button>
+  </div>,
+);
+```
+
+<details>
+  <summary>Why is the prop prefixed by a dollar?</summary>
+
+We call the prop `$primary` a "transient prop", transient props can be consumed by the components but are not passed to the underlying components. It our case, it means the `<button>` will not get a `<button $primary="true">` attribute in the DOM.
+
+</details>
+
+## Use with `cva`
+
+For complex use cases, you can use [`cva`](https://cva.style/docs) with `twc` to have more control on the variants.
+
+```tsx
+const button = cva("font-semibold border border-blue-500 rounded", {
+  variants: {
+    $intent: {
+      primary: "bg-blue-500 text-white",
+      secondary: "bg-white text-gray-800",
+    },
+  },
+  defaultVariants: {
+    $intent: "primary",
+  },
+});
+
+type ButtonProps = React.ComponentProps<"button"> & VariantProps<typeof button>;
+
+const Button = twc.button<ButtonProps>(({ $intent }) => button({ $intent }));
+```

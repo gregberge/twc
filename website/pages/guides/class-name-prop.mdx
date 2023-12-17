@@ -1,0 +1,52 @@
+# The `className` prop
+
+All `twc` components accepts a `className` prop that allows you to extend classes of your component.
+
+## Extend classes
+
+`twc` uses [`clsx`](https://github.com/lukeed/clsx) to merge classes, it means you can specify any format accepted by `clsx` to extend class.
+
+```tsx
+import { twc } from 'react-twc'
+
+const Title = twc.h2`text-2xl font-bold`;
+
+// Strings
+<Title className="uppercase" />
+
+// Array
+<Title className={[false, 0, "uppercase"]} />
+
+// Objects
+<Title className={{ uppercase: true }} />
+
+// Nesting
+<Title className={[{ uppercase: true }, "underline"]} />
+```
+
+## Solve class conflicts
+
+By default classes are not merged. If you want to merge classes, you can use `twc` with [`tailwind-merge`](https://github.com/dcastil/tailwind-merge).
+
+```ts filename="utils.ts"
+import { twMerge } from "tailwind-merge";
+import { clsx } from "clsx";
+import { createTwc } from "react-twc";
+
+// Using `clsx` + `twMerge` for a complete flexbility (taken from shadcn/ui)
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+// We named it `twx` to have better autocompletion
+export const twx = createTwc({ compose: twMerge });
+```
+
+```tsx filename="card.tsx"
+import { twx } from "./utils";
+
+const Card = twx.div`rounded-lg border bg-slate-100 text-white shadow-sm`;
+
+// tw-merge will automatically resolve conflict between `rounded-lg` and `rounded-sm`
+<Card className="rounded-sm" />;
+```

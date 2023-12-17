@@ -1,0 +1,128 @@
+import { Tab, Tabs } from "nextra-theme-docs";
+
+# Get started with `twc`
+
+## 1. Install package
+
+<Tabs items={["pnpm", "npm", "yarn", "bun"]}>
+  <Tab>
+
+    ```sh
+    pnpm i react-twc
+    ```
+
+  </Tab>
+  <Tab>
+
+    ```sh
+    npm i react-twc
+    ```
+
+  </Tab>
+  <Tab>
+  
+    ```sh
+    yarn add react-twc
+    ```
+  
+  </Tab>
+
+  <Tab>
+  
+    ```sh
+    bun add react-twc
+    ```
+  
+  </Tab>
+</Tabs>
+
+## 2. Setup autocompletion in your editor
+
+You can enable Tailwind autocompletion inside `twc` using the steps below:
+
+<Tabs items={["Visual Studio Code", "Neovim", "WebStorm"]}>
+  <Tab>
+
+    1. [Install the "Tailwind CSS IntelliSense" Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+
+    2. Add the following to your [`settings.json`](https://code.visualstudio.com/docs/getstarted/settings):
+
+    ```json
+    {
+      "tailwindCSS.experimental.classRegex": [
+        "twc\\.[^`]+`([^`]*)`",
+        "twc\\(.*?\\).*?`([^)]*)",
+        ["twc\\.[^`]+\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+        ["twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+      ]
+    }
+    ```
+
+  </Tab>
+  <Tab>
+
+    1. [Install the extension](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#tailwindcss)
+
+    2. Add the following configuration:
+
+    ```lua
+    require 'lspconfig'.tailwindcss.setup({
+      settings = {
+        tailwindCSS = {
+          experimental = {
+            classRegex = {
+              "twc\\.[^`]+`([^`]*)`",
+              "twc\\(.*?\\).*?`([^)]*)",
+              { "twc\\.[^`]+\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+              { "twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" }
+            },
+          },
+        },
+      },
+    })
+    ```
+
+  </Tab>
+  <Tab>
+
+    1. Check the version. Available for [WebStorm 2023.1](https://www.jetbrains.com/webstorm/whatsnew/#version-2023-1-tailwind-css-configuration) and later
+
+    2. Open the settings. Go to [Languages and Frameworks | Style Sheets | Tailwind CSS](https://www.jetbrains.com/help/webstorm/tailwind-css.html#ws_css_tailwind_configuration)
+
+    3. Add the following to your tailwind configuration
+
+    ```json
+    {
+      "experimental": {
+        "classRegex": [
+          "twc\\.[^`]+`([^`]*)`",
+          "twc\\(.*?\\).*?`([^)]*)",
+          ["twc\\.[^`]+\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+          ["twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+        ]
+      }
+    }
+    ```
+
+  </Tab>
+</Tabs>
+
+## 3. Create reusable components
+
+Import `twc` and create a component using `twc.div`, where `div` stands to the tag name of the component you want to create.
+
+```tsx filename="card.tsx"
+import { tsc } from "react-twc";
+
+export const Card = twc.div`rounded-lg border bg-slate-100 text-white shadow-sm`;
+```
+
+Then you can use your component to in your app:
+
+```tsx filename"app.tsx"
+import { Card } from "./card";
+
+function App() {
+  return <Card>Hello world!</Card>;
+}
+```

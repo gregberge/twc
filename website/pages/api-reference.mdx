@@ -1,0 +1,42 @@
+# API Reference
+
+List of exports available from `react-twc` package.
+
+## `twc`
+
+Builds a `twc` component.
+
+```tsx
+import { twc } from "react-twc";
+
+const Title = twc.h2`font-bold`;
+```
+
+## `createTwc`
+
+Create a custom instance of `twc`.
+
+```ts
+import { createTwc } from "react-twc";
+import { twMerge } from "tailwind-merge";
+
+const twx = createTwc({
+  compose: twMerge,
+  shouldForwardProp: (prop) => prop[0] !== "_",
+});
+```
+
+### Options
+
+- `compose`: The compose function to use. Defaults to `clsx`.
+- `shouldForwardProp`: The function to use to determine if a prop should be forwarded to the underlying component. Defaults to `prop => prop[0] !== "$"`.
+
+## `cx`
+
+Concatenates class names (an alias of [`clsx`](https://github.com/lukeed/clsx)).
+
+```tsx
+import { cx } from "react-twc";
+
+const className = cx(classes);
+```

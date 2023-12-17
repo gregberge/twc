@@ -1,0 +1,14 @@
+# Styling any component
+
+`twc` can be used on all your own or third-party components as long as they accepts a `className` prop.
+
+## Usage
+
+In this example, we style a `next/link` by specifying `twc(Link)`:
+
+```tsx
+import Link from "next/link";
+import { twc } from "react-twc";
+
+const Link = twc(Link)`underline text-blue-800 hover:text-blue-900`;
+```

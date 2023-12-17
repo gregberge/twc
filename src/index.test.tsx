@@ -1,8 +1,9 @@
 import { describe, expect, test, beforeEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { cva, VariantProps } from "class-variance-authority";
-import { twc } from "./index";
+import { twc, createTwc } from "./index";
 import * as React from "react";
+import { twMerge } from "tailwind-merge";
 
 describe("twc", () => {
   beforeEach(cleanup);
@@ -27,6 +28,15 @@ describe("twc", () => {
   test("merges classes", () => {
     const Title = twc.h1`text-xl`;
     render(<Title className="font-medium">Title</Title>);
+    const title = screen.getByText("Title");
+    expect(title).toBeDefined();
+    expect(title.classList.contains("text-xl")).toBe(true);
+    expect(title.classList.contains("font-medium")).toBe(true);
+  });
+
+  test("accepts clsx classes", () => {
+    const Title = twc.h1`text-xl`;
+    render(<Title className={["font-medium"]}>Title</Title>);
     const title = screen.getByText("Title");
     expect(title).toBeDefined();
     expect(title.classList.contains("text-xl")).toBe(true);
@@ -129,5 +139,19 @@ describe("twc", () => {
     expect(title).toBeDefined();
     expect(title.tagName).toBe("H2");
     expect(title.classList.contains("text-xl")).toBe(true);
+  });
+
+  test("works with tailwind-merge", () => {
+    const twx = createTwc({
+      compose: twMerge,
+    });
+
+    const Title = twx.h1`font-bold`;
+
+    render(<Title className="font-medium">Title</Title>);
+    const title = screen.getByText("Title");
+    expect(title).toBeDefined();
+    expect(title.classList.contains("font-medium")).toBe(true);
+    expect(title.classList.contains("font-bold")).toBe(false);
   });
 });
