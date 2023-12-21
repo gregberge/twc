@@ -2,8 +2,8 @@
 title: TWC – Tailwind React Components
 ---
 
+import Link from "next/link";
 import { Hero } from "@/components/Hero";
-import { Bleed } from "nextra-theme-docs";
 
 <Hero />
 
@@ -46,7 +46,18 @@ const Card = twc.div`rounded-lg border bg-slate-100 text-white shadow-sm`;
 
 With just one single line of code, you can create a reusable component with all these amazing features out-of-the-box:
 
-- **Lightweight** and **fast**
-- **Style reuse** using `asChild` prop support
-- **Style all components**, DOM, library based or yours
-- `ref` prop support
+- ⚡️ Lightweight — only 0.65kb
+- ✨ Autocompletion in all editors
+- 🎨 Adapt the style based on props
+- ♻️ Reuse classes with `asChild` prop
+- 🦄 Work with all components
+- 🚀 First-class `tailwind-merge` and `cva` support
+
+<div className="my-8">
+  <Link
+    className="inline-block text-lg rounded-lg text-white border border-indigo-9 font-medium px-4 py-2 transition hover:border-indigo-11"
+    href="/docs/getting-started"
+  >
+    Get started with TWC →
+  </Link>
+</div>
