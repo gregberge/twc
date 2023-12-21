@@ -9,10 +9,11 @@ import { Hero } from "@/components/Hero";
 
 <div className="flex flex-col gap-8">
 <div className="flex-1">
-  <div className="text-xl text-center font-semibold">Without `twc`:</div>
+  <div className="text-xl text-center font-semibold">Turn this React component:</div>
 
 ```tsx
 import * as React from "react";
+import clsx from "clsx";
 
 const Card = React.forwardRef<
   HTMLDivElement,
@@ -31,7 +32,7 @@ const Card = React.forwardRef<
 
 </div>
 <div className="flex-1">
-  <div className="text-xl text-center font-semibold">With `twc`:</div>
+  <div className="text-xl text-center font-semibold">Into a single line:</div>
 
 ```tsx
 import { twc } from "react-twc";
