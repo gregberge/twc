@@ -9,8 +9,9 @@
     "test": "vitest",
     "build": "rm -rf dist && rollup -c",
     "format": "prettier --write .",
-    "lint": "eslint . && prettier --check .",
-    "prepublishOnly": "npm run build",
+    "check-format": "prettier --check src",
+    "lint": "eslint .",
+    "check-types": "tsc --noEmit",
     "release": "standard-version && conventional-github-releaser --preset angular"
   },
   "keywords": [
