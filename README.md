@@ -65,7 +65,7 @@ If you're interested in contributing to the documentation, check out the
 
 ## Support
 
-Having trouble? Ping me on X [@gregberge\_](https://x.com/gregberge_)
+Having trouble? [Ping me on X](https://x.com/gregberge_)
 
 ## Acknowledgement
 
