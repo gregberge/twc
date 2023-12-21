@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    @apply !bg-slate-1;
+  }
+
+  footer {
+    @apply !bg-slate-2;
+  }
+}

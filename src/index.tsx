@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { clsx } from "clsx";
 import { Slot } from "@radix-ui/react-slot";
@@ -83,6 +84,7 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
     config.shouldForwardProp ?? ((prop) => prop[0] !== "$");
   const template =
     (Component: React.ElementType) =>
+    // eslint-disable-next-line @typescript-eslint/ban-types
     (stringsOrFn: TemplateStringsArray | Function, ...values: any[]) => {
       const isFn = typeof stringsOrFn === "function";
       const twClassName = isFn

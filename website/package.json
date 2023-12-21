@@ -12,10 +12,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@vercel/og": "^0.6.1",
     "next": "^14.0.4",
     "nextra": "^2.13.2",
     "nextra-theme-docs": "^2.13.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.10.5",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "shikiji": "^0.9.10",
+    "tailwindcss": "^3.4.0",
+    "typescript": "5.3.3",
+    "windy-radix-palette": "2.0.0-beta.7"
   }
 }

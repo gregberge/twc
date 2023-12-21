@@ -1,42 +1,17 @@
 import { Tab, Tabs } from "nextra-theme-docs";
+import { Steps } from "nextra/components";
 
 # Get started with `twc`
 
-## 1. Install package
+<Steps>
+### Install package
 
-<Tabs items={["pnpm", "npm", "yarn", "bun"]}>
-  <Tab>
+```sh npm2yarn
+npm i react-twc
+```
 
-    ```sh
-    pnpm i react-twc
-    ```
 
-  </Tab>
-  <Tab>
-
-    ```sh
-    npm i react-twc
-    ```
-
-  </Tab>
-  <Tab>
-  
-    ```sh
-    yarn add react-twc
-    ```
-  
-  </Tab>
-
-  <Tab>
-  
-    ```sh
-    bun add react-twc
-    ```
-  
-  </Tab>
-</Tabs>
-
-## 2. Setup autocompletion in your editor
+### Setup autocompletion in your editor
 
 You can enable Tailwind autocompletion inside `twc` using the steps below:
 
@@ -107,7 +82,7 @@ You can enable Tailwind autocompletion inside `twc` using the steps below:
   </Tab>
 </Tabs>
 
-## 3. Create reusable components
+### Create reusable components
 
 Import `twc` and create a component using `twc.div`, where `div` stands to the tag name of the component you want to create.
 
@@ -126,3 +101,5 @@ function App() {
   return <Card>Hello world!</Card>;
 }
 ```
+
+</Steps>
