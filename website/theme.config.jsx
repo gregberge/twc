@@ -109,8 +109,8 @@ export default {
     const { route } = useRouter();
     const socialCard =
       route === "/" || !title
-        ? "https://twc.style/og.jpg"
-        : `https://twc.style/api/og?title=${title}`;
+        ? "https://react-twc.vercel.app/og.jpg"
+        : `https://react-twc.vercel.app/api/og?title=${title}`;
 
     return (
       <>
@@ -128,8 +128,8 @@ export default {
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={socialCard} />
-        <meta name="twitter:site:domain" content="twc.style" />
-        <meta name="twitter:url" content="https://twc.style" />
+        <meta name="twitter:site:domain" content="react-twc.vercel.app" />
+        <meta name="twitter:url" content="https://react-twc.vercel.app" />
         <meta name="og:title" content={title ? title + " – TWC" : "TWC"} />
         <meta name="og:image" content={socialCard} />
         <meta name="apple-mobile-web-app-title" content="TWC" />
