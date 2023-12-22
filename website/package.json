@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@vercel/analytics": "^1.1.1",
     "@vercel/og": "^0.6.1",
     "next": "^14.0.4",
     "nextra": "^2.13.2",
