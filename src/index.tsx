@@ -7,6 +7,13 @@ export { clsx as cx };
 
 type AbstractCompose = (...params: any) => string;
 
+type ExtractComponentProps<
+  TComponent extends React.ElementType,
+  TCompose extends AbstractCompose,
+> = Omit<React.ComponentProps<TComponent>, "className"> & {
+  className?: Parameters<TCompose>[0];
+};
+
 type ResultProps<
   TComponent extends React.ElementType,
   TProps,
@@ -14,13 +21,9 @@ type ResultProps<
   TCompose extends AbstractCompose,
 > = TProps extends undefined
   ? TExtraProps extends undefined
-    ? Omit<React.ComponentProps<TComponent>, "className"> & {
-        className?: Parameters<TCompose>[0];
-      }
-    : Omit<React.ComponentProps<TComponent>, "className"> & {
-        className?: Parameters<TCompose>[0];
-      } & TExtraProps
-  : TProps;
+    ? ExtractComponentProps<TComponent, TCompose>
+    : ExtractComponentProps<TComponent, TCompose> & TExtraProps
+  : TProps & ExtractComponentProps<TComponent, TCompose> & TExtraProps;
 
 type Template<
   TComponent extends React.ElementType,

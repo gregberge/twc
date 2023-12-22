@@ -43,11 +43,11 @@ describe("twc", () => {
     expect(title.classList.contains("font-medium")).toBe(true);
   });
 
-  test("accepts custom props", () => {
+  test("accepts additional props", () => {
     type TitleProps = { children: React.ReactNode; className?: string };
     const Title = twc.h1<TitleProps>`text-xl`;
     render(
-      // @ts-expect-error `title` is not a valid prop
+      // title should still be a valid prop as its inherited from h1
       <Title className="font-medium" title="x">
         Title
       </Title>,
@@ -96,7 +96,7 @@ describe("twc", () => {
   });
 
   test("works with cva", () => {
-    const button = cva(["font-semibold", "border", "rounded"], {
+    const buttonVariants = cva(["font-semibold", "border", "rounded"], {
       variants: {
         $intent: {
           primary: ["bg-blue-500", "text-white"],
@@ -109,10 +109,10 @@ describe("twc", () => {
     });
 
     type ButtonProps = React.ComponentProps<"button"> &
-      VariantProps<typeof button>;
+      VariantProps<typeof buttonVariants>;
 
     const Button = twc.button<ButtonProps>(({ $intent }) =>
-      button({ $intent }),
+      buttonVariants({ $intent }),
     );
 
     render(
@@ -139,6 +139,39 @@ describe("twc", () => {
     expect(title).toBeDefined();
     expect(title.tagName).toBe("H2");
     expect(title.classList.contains("text-xl")).toBe(true);
+  });
+
+  test("works with cva and asChild", () => {
+    const titleVariants = cva("text-xl", {
+      variants: {
+        $intent: {
+          primary: ["font-extrabold"],
+          secondary: ["font-bold"],
+        },
+      },
+      defaultVariants: {
+        $intent: "primary",
+      },
+    });
+
+    type TitleProps = React.ComponentProps<"h1"> &
+      VariantProps<typeof titleVariants>;
+
+    const Title = twc.button<TitleProps>(({ $intent }) =>
+      titleVariants({ $intent }),
+    );
+
+    render(
+      <Title $intent="secondary" asChild>
+        <h2>Title</h2>
+      </Title>,
+    );
+    const title = screen.getByText("Title");
+    expect(title).toBeDefined();
+    expect(title.tagName).toBe("H2");
+    expect(title.getAttribute("$intent")).toBe(null);
+    expect(title.classList.contains("text-xl")).toBe(true);
+    expect(title.classList.contains("font-bold")).toBe(true);
   });
 
   test("works with tailwind-merge", () => {
