@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
-import { clsx } from "clsx";
+import { clsx, type ClassValue } from "clsx";
 import { Slot } from "@radix-ui/react-slot";
 
 export { clsx as cx };
 
-type AbstractCompose = (...params: any) => string;
+type AbstractCompose = (...params: ClassValue[]) => string;
 
 type ResultProps<
   TComponent extends React.ElementType,

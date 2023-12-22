@@ -4,6 +4,11 @@ import { cva, VariantProps } from "class-variance-authority";
 import { twc, createTwc } from "./index";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from "clsx";
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 describe("twc", () => {
   beforeEach(cleanup);
@@ -143,7 +148,7 @@ describe("twc", () => {
 
   test("works with tailwind-merge", () => {
     const twx = createTwc({
-      compose: twMerge,
+      compose: cn,
     });
 
     const Title = twx.h1`font-bold`;
