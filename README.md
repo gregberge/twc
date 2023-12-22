@@ -23,7 +23,7 @@ Visit our [official documentation](https://react-twc.vercel.app).
 
 ## Usage
 
-**Without `tsc`:**
+**Without `twc`:**
 
 ```tsx
 import * as React from "react";
@@ -43,7 +43,7 @@ const Card = React.forwardRef<
 ));
 ```
 
-**With `tsc`:**
+**With `twc`:**
 
 ```tsx
 import { twc } from "react-twc";
