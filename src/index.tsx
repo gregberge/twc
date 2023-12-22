@@ -23,7 +23,9 @@ type ResultProps<
   ? TExtraProps extends undefined
     ? ExtractComponentProps<TComponent, TCompose>
     : ExtractComponentProps<TComponent, TCompose> & TExtraProps
-  : TProps & ExtractComponentProps<TComponent, TCompose> & TExtraProps;
+  : TExtraProps extends undefined
+    ? TProps & ExtractComponentProps<TComponent, TCompose>
+    : TProps & ExtractComponentProps<TComponent, TCompose> & TExtraProps;
 
 type Template<
   TComponent extends React.ElementType,
