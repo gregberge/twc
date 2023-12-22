@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "Create reusable Tailwind CSS components with React.",
   "type": "module",
-  "types": "./dist/index.d.ts",
-  "exports": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "module": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "test": "vitest",
     "build": "rm -rf dist && rollup -c",
