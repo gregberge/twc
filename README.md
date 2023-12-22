@@ -13,6 +13,7 @@
 - 🎨 Adapt the style based on props
 - ♻️ Reuse classes with `asChild` prop
 - 🦄 Work with all components
+- 😎 Compatible with React Server Components
 - 🚀 First-class `tailwind-merge` and `cva` support
 
 <br/>
