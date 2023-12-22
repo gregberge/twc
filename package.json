@@ -17,6 +17,7 @@
     "check-format": "prettier --check src",
     "lint": "eslint .",
     "check-types": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
     "release": "standard-version && conventional-github-releaser --preset angular"
   },
   "keywords": [
