@@ -39,7 +39,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // We named it `twx` to have better autocompletion
-export const twx = createTwc({ compose: twMerge });
+export const twx = createTwc({ compose: cn });
 ```
 
 ```tsx filename="card.tsx"
