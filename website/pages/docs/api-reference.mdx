@@ -2,7 +2,7 @@
 
 List of exports available from `react-twc` package.
 
-## `twc`
+### `twc`
 
 Builds a `twc` component.
 
@@ -12,7 +12,7 @@ import { twc } from "react-twc";
 const Title = twc.h2`font-bold`;
 ```
 
-## `createTwc`
+### `createTwc`
 
 Create a custom instance of `twc`.
 
@@ -26,12 +26,12 @@ const twx = createTwc({
 });
 ```
 
-### Options
+#### Options
 
 - `compose`: The compose function to use. Defaults to `clsx`.
 - `shouldForwardProp`: The function to use to determine if a prop should be forwarded to the underlying component. Defaults to `prop => prop[0] !== "$"`.
 
-## `cx`
+### `cx`
 
 Concatenates class names (an alias of [`clsx`](https://github.com/lukeed/clsx)).
 
@@ -39,4 +39,14 @@ Concatenates class names (an alias of [`clsx`](https://github.com/lukeed/clsx)).
 import { cx } from "react-twc";
 
 const className = cx(classes);
+```
+
+### `TwcComponentProps<Component, Compose = typeof clsx>`
+
+Returns props accepted by a `twc` component. Similar to `React.ComponentProps<"button">` with `asChild` prop and `className` type from `clsx`.
+
+```tsx
+import type { TwcComponentProps } from "react-twc";
+
+type ButtonProps = TwcComponentProps<"button">;
 ```
