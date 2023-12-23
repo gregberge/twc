@@ -6,10 +6,10 @@
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "module": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     }
   },
+  "types": "./dist/index.d.ts",
   "scripts": {
     "test": "vitest",
     "build": "rm -rf dist && rollup -c",

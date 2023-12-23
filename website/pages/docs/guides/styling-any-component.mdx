@@ -4,11 +4,24 @@
 
 ## Usage
 
-In this example, we style a `next/link` by specifying `twc(Link)`:
+Sometime you may want to style components from libraries like [Radix](https://www.radix-ui.com/) or [React Aria Components](https://react-spectrum.adobe.com/react-aria/index.html) or your own cooked components.
 
-```tsx
-import Link from "next/link";
+In this example, we style a `HoverCard` from Radix:
+
+```tsx {4-6,12}
+import * as HoverCard from "@radix-ui/react-hover-card";
 import { twc } from "react-twc";
 
-const Link = twc(Link)`underline text-blue-800 hover:text-blue-900`;
+const HoverCardContent = twc(
+  HoverCard.Content,
+)`data-[side=bottom]:animate-slideUpAndFade data-[side=right]:animate-slideLeftAndFade data-[side=left]:animate-slideRightAndFade data-[side=top]:animate-slideDownAndFade w-[300px] rounded-md bg-white p-5 shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] data-[state=open]:transition-all`;
+
+export default () => (
+  <HoverCard.Root>
+    <HoverCard.Trigger>Hover me</HoverCard.Trigger>
+    <HoverCard.Portal>
+      <HoverCardContent>Hello from hover card</HoverCardContent>
+    </HoverCard.Portal>
+  </HoverCard.Root>
+);
 ```

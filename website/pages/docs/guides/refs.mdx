@@ -1,0 +1,37 @@
+# Refs
+
+One of the biggest feature of `twc` is the automatic forwarding of `ref` prop. You don't have to worry about it any more.
+
+## Usage
+
+Take this component with a forwarded ref.
+
+```tsx /React.forwardRef/
+import * as React from "react";
+
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className="rounded-lg border bg-slate-100 text-white shadow-sm"
+    {...props}
+  />
+));
+```
+
+With `twc`, the `ref` prop is automatically forwarded:
+
+```tsx
+const Card = twc.div`rounded-lg border bg-slate-100 text-white shadow-sm`;
+```
+
+So you can safely use `ref` on `Card` component:
+
+```tsx /ref/
+function CardDemo() {
+  const ref = useRef();
+  return <Card ref={ref}>TWC is magic!</Card>;
+}
+```

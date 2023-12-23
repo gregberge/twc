@@ -49,6 +49,11 @@ type Twc<TCompose extends AbstractCompose> = (<T extends React.ElementType>(
 
 type ShouldForwardProp = (prop: string) => boolean;
 
+export type TwcComponentProps<
+  TComponent extends React.ElementType,
+  TCompose extends AbstractCompose = typeof clsx,
+> = ResultProps<TComponent, undefined, { asChild?: boolean }, TCompose>;
+
 export type Config<TCompose extends AbstractCompose> = {
   /**
    * The compose function to use. Defaults to `clsx`.
