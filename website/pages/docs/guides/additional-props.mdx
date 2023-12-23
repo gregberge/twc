@@ -1,0 +1,34 @@
+# Additional props
+
+To avoid unnecessary wrappers that just pass on some props to the rendered component or element, you can use the `.attrs` constructor. It allows you to attach additional props (or "attributes") to a component.
+
+## Usage
+
+Create an `input` of type "checkbox" with `twc`:
+
+```ts
+const Checkbox = twc.input.attrs({
+  type: "checkbox",
+})`appearance-none size-4 border-2 border-blue-500 rounded-sm bg-white`;
+```
+
+## Adapting attributes based on props
+
+`attrs` accepts a function to generate attributes based on input props.
+
+In this example, we create an anchor that accepts an `$external` prop and adds `target` and `rel` attributes based on its value.
+
+```ts
+import { twc, TwcComponentProps } from "react-twc";
+
+type AnchorProps = TwcComponentProps<"a"> & { $external?: boolean };
+
+// Accept an $external prop that adds `target` and `rel` attributes if present
+const Anchor = twc.a.attrs<AnchorProps>((props) =>
+  props.$external ? { target: "_blank", rel: "noopener noreferrer" } : {},
+)`appearance-none size-4 border-2 border-blue-500 rounded-sm bg-white`;
+
+render(
+  <Anchor $external href="https://cva.style">Class Variance Authority</Link>
+);
+```

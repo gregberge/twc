@@ -26,7 +26,8 @@ type Template<
   TComponent extends React.ElementType,
   TCompose extends AbstractCompose,
   TExtraProps,
-> = <TProps = undefined>(
+  TParentProps = undefined,
+> = <TProps = TParentProps>(
   strings:
     | TemplateStringsArray
     | ((
@@ -37,10 +38,24 @@ type Template<
   ResultProps<TComponent, TProps, TExtraProps, TCompose>
 >;
 
+type FirstLevelTemplate<
+  TComponent extends React.ElementType,
+  TCompose extends AbstractCompose,
+  TExtraProps,
+> = Template<TComponent, TCompose, TExtraProps> & {
+  attrs: <TProps = undefined>(
+    attrs:
+      | Record<string, any>
+      | ((
+          props: ResultProps<TComponent, TProps, TExtraProps, TCompose>,
+        ) => Record<string, any>),
+  ) => Template<TComponent, TCompose, TExtraProps, TProps>;
+};
+
 type Twc<TCompose extends AbstractCompose> = (<T extends React.ElementType>(
   component: T,
-) => Template<T, TCompose, undefined>) & {
-  [Key in keyof HTMLElementTagNameMap]: Template<
+) => FirstLevelTemplate<T, TCompose, undefined>) & {
+  [Key in keyof HTMLElementTagNameMap]: FirstLevelTemplate<
     Key,
     TCompose,
     { asChild?: boolean }
@@ -81,44 +96,62 @@ function filterProps(
   return filteredProps;
 }
 
+type Attributes = Record<string, any> | ((props: any) => Record<string, any>);
+
 export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
   config: Config<TCompose> = {},
 ) => {
-  const compose = config.compose ?? clsx;
+  const compose = config.compose || clsx;
   const shouldForwardProp =
-    config.shouldForwardProp ?? ((prop) => prop[0] !== "$");
-  const template =
-    (Component: React.ElementType) =>
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    (stringsOrFn: TemplateStringsArray | Function, ...values: any[]) => {
-      const isFn = typeof stringsOrFn === "function";
-      const twClassName = isFn
-        ? ""
-        : String.raw({ raw: stringsOrFn }, ...values);
-      return React.forwardRef((props: any, ref) => {
-        const { className, asChild, ...rest } = props;
-        const filteredProps = filterProps(rest, shouldForwardProp);
-        const Comp = asChild ? Slot : Component;
-        return (
-          <Comp
-            ref={ref}
-            className={compose(
-              isFn ? stringsOrFn(props) : twClassName,
-              className,
-            )}
-            {...filteredProps}
-          />
-        );
-      });
+    config.shouldForwardProp || ((prop) => prop[0] !== "$");
+  const wrap = (Component: React.ElementType) => {
+    const createTemplate = (attrs?: Attributes) => {
+      const template = (
+        stringsOrFn: TemplateStringsArray | Function,
+        ...values: any[]
+      ) => {
+        const isFn = typeof stringsOrFn === "function";
+        const twClassName = isFn
+          ? ""
+          : String.raw({ raw: stringsOrFn }, ...values);
+        return React.forwardRef((p: any, ref) => {
+          const { className, asChild, ...rest } = p;
+          const rp =
+            typeof attrs === "function" ? attrs(p) : attrs ? attrs : {};
+          const fp = filterProps({ ...rp, ...rest }, shouldForwardProp);
+          const Comp = asChild ? Slot : Component;
+          return (
+            <Comp
+              ref={ref}
+              className={compose(
+                isFn ? stringsOrFn(p) : twClassName,
+                className,
+              )}
+              {...fp}
+            />
+          );
+        });
+      };
+
+      if (attrs === undefined) {
+        template.attrs = (attrs: Attributes) => {
+          return createTemplate(attrs);
+        };
+      }
+
+      return template;
     };
+
+    return createTemplate();
+  };
 
   return new Proxy(
     (component: React.ComponentType) => {
-      return template(component);
+      return wrap(component);
     },
     {
       get(_, name) {
-        return template(name as keyof JSX.IntrinsicElements);
+        return wrap(name as keyof JSX.IntrinsicElements);
       },
     },
   ) as any as Twc<TCompose>;
