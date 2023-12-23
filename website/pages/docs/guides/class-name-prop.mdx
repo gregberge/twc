@@ -28,7 +28,7 @@ const Title = twc.h2`text-2xl font-bold`;
 
 By default classes are not merged. If you want to merge classes, you can use `twc` with [`tailwind-merge`](https://github.com/dcastil/tailwind-merge).
 
-```ts filename="utils.ts"
+```ts filename="utils.ts" {11}
 import { twMerge } from "tailwind-merge";
 import { clsx } from "clsx";
 import { createTwc } from "react-twc";
@@ -42,7 +42,7 @@ export function cn(...inputs: ClassValue[]) {
 export const twx = createTwc({ compose: cn });
 ```
 
-```tsx filename="card.tsx"
+```tsx filename="card.tsx" /twx/ {6}
 import { twx } from "./utils";
 
 const Card = twx.div`rounded-lg border bg-slate-100 text-white shadow-sm`;

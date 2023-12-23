@@ -4,25 +4,27 @@
 
 ## Usage
 
-Take a `Link` component defined in your app:
+A good example is an `Anchor` component that you may want to reuse but with a `next/link` component. Let's see how you can achieve this using `asChild`:
 
-```ts filename="components/link.ts"
+Take an `Anchor` component:
+
+```ts filename="components/anchor.ts"
 import { twc } from "react-twc";
 
-const Link = twc.a`underline text-blue-800 hover:text-blue-900`;
+export const Anchor = twc.a`underline text-blue-800 hover:text-blue-900`;
 ```
 
-You can reuse the style for a `next/link`, it is possible using `asChild` prop:
+You can reuse the style for a `next/link` using `asChild` prop:
 
-```tsx filename="app.tsx"
+```tsx {6} /asChild/
 import NextLink from "next/link";
-import { Link } from "./components/link";
+import { Anchor } from "./components/anchor";
 
-function App() {
-  return (
-    <Link asChild>
-      <NextLink href="/">Go home</NextLink>
-    </Link>
-  );
-}
+export default () => (
+  <Anchor asChild>
+    <NextLink href="/">Go home</NextLink>
+  </Anchor>,
+);
 ```
+
+To learn more about `asChild`, read [Radix documentation](https://www.radix-ui.com/primitives/docs/guides/composition#changing-the-element-type). `twc` uses [Slot component](https://www.radix-ui.com/primitives/docs/utilities/slot) internally to implement `asChild` prop.

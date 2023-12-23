@@ -6,23 +6,26 @@ You can pass a function to `twc` to adapt the components based on props.
 
 This button component has a primary state that changes its color. When setting the `$primary` prop to true, we are changing its style.
 
-```tsx
-import { twc } from "react-twc";
+```tsx {7} /props/ /$primary/
+import { twc, TwcComponentProps } from "react-twc";
 
-type ButtonProps = React.ComponentProps<"button"> & { $primary?: boolean };
+type ButtonProps = TwcComponentProps<"button"> & { $primary?: boolean };
 
 const Button = twc.button<ButtonProps>((props) => [
   "font-semibold border border-blue-500 rounded",
   props.$primary ? "bg-blue-500 text-white" : "bg-white text-gray-800",
 ]);
 
-render(
+export default () => (
   <div>
     <Button>Normal</Button>
     <Button $primary>Primary</Button>
   </div>,
 );
 ```
+
+You may have noticed the usage of `TwcComponentProps<"button">`, it is a helper to
+return props accepted by a `twc` component. It's similar to `React.ComponentProps<"button">` with `asChild` prop and `className` type from `clsx`.
 
 <details>
   <summary>Why is the prop prefixed by a dollar?</summary>
@@ -35,7 +38,10 @@ We call the prop `$primary` a "transient prop", transient props can be consumed 
 
 For complex use cases, you can use [`cva`](https://cva.style/docs) with `twc` to have more control on the variants.
 
-```tsx
+```tsx {18} /$intent/
+import { twc, TwcComponentProps } from "react-twc";
+import { cva } from "class-variance-authority";
+
 const button = cva("font-semibold border border-blue-500 rounded", {
   variants: {
     $intent: {
@@ -48,7 +54,15 @@ const button = cva("font-semibold border border-blue-500 rounded", {
   },
 });
 
-type ButtonProps = React.ComponentProps<"button"> & VariantProps<typeof button>;
+type ButtonProps = TwcComponentProps<"button"> & VariantProps<typeof button>;
 
 const Button = twc.button<ButtonProps>(({ $intent }) => button({ $intent }));
+
+export default () => (
+  <div>
+    <Button>Primary button (default)</Button>
+    <Button $intent="primary">Primary button</Button>
+    <Button $intent="secondary">Secondary button</Button>
+  </div>
+);
 ```
