@@ -4,10 +4,10 @@ export function Hero() {
   return (
     <div className="text">
       <div className="text-center mt-10 mb-20 max-w-4xl mx-auto text-balance">
-        <h1 className="text-[3.4rem] leading-none md:text-8xl mb-5 font-semibold font-accent text-transparent bg-clip-text bg-gradient-to-br from-blue-9 to-purple-11">
+        <h1 className="text-[3rem] leading-none md:text-8xl mb-5 font-semibold font-accent text-transparent bg-clip-text bg-gradient-to-br from-blue-9 to-purple-11">
           Supercharge React + Tailwind
         </h1>
-        <p className="text-xl md:text-2xl text-low">
+        <p className="text-lg md:text-2xl text-low">
           TWC is a lightweight library to create Tailwind Components in one
           line, write less code and build faster.
         </p>
