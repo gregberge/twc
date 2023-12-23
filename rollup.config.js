@@ -1,17 +1,15 @@
 import { swc } from "rollup-plugin-swc3";
 import ts from "rollup-plugin-ts";
 
-const swcPlugin = (minify) =>
-  swc({
-    tsconfig: false,
-    minify,
-    jsc: {
-      parser: {
-        syntax: "typescript",
-      },
-      target: "es2018",
+const swcPlugin = swc({
+  tsconfig: false,
+  jsc: {
+    parser: {
+      syntax: "typescript",
     },
-  });
+    target: "es2018",
+  },
+});
 
 const tsPlugin = ts({ transpiler: "swc" });
 
@@ -28,21 +26,7 @@ const buildEs = ({
     file: output,
     format: "es",
   },
-  plugins: [swcPlugin(false)],
-});
-
-const buildMin = ({
-  input = "src/index.tsx",
-  output = "dist/index.min.mjs",
-  external = ignoreRelative,
-} = {}) => ({
-  input,
-  external,
-  output: {
-    file: output,
-    format: "es",
-  },
-  plugins: [swcPlugin(true)],
+  plugins: [swcPlugin],
 });
 
 const buildTypes = ({
@@ -59,4 +43,4 @@ const buildTypes = ({
   plugins: [tsPlugin],
 });
 
-export default [buildEs(), buildMin(), buildTypes()];
+export default [buildEs(), buildTypes()];
