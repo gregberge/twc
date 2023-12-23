@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { cva, VariantProps } from "class-variance-authority";
-import { twc, createTwc } from "./index";
+import { twc, createTwc, TwcComponentProps } from "./index";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -23,6 +23,51 @@ describe("twc", () => {
     const title = screen.getByText("Title");
     expect(title).toBeDefined();
     expect(title.dataset.foo).toBe("bar");
+  });
+
+  test("supports attrs", () => {
+    const Checkbox = twc.input.attrs({ type: "checkbox" })`text-xl`;
+    render(<Checkbox data-testid="checkbox" />);
+    const checkbox = screen.getByTestId("checkbox");
+    expect(checkbox).toBeDefined();
+    expect(checkbox.getAttribute("type")).toBe("checkbox");
+  });
+
+  test("supports attrs from props", () => {
+    const Checkbox = twc.input.attrs<{ $type?: string }>((props) => ({
+      type: props.$type || "checkbox",
+      "data-testid": "checkbox",
+    }))`text-xl`;
+    render(<Checkbox />);
+    const checkbox = screen.getByTestId("checkbox");
+    expect(checkbox).toBeDefined();
+    expect(checkbox.getAttribute("type")).toBe("checkbox");
+
+    cleanup();
+
+    render(<Checkbox $type="radio" />);
+    const radio = screen.getByTestId("checkbox");
+    expect(radio).toBeDefined();
+    expect(radio.getAttribute("type")).toBe("radio");
+  });
+
+  test("complex attrs support", () => {
+    type LinkProps = TwcComponentProps<"a"> & { $external?: boolean };
+
+    // Accept an $external prop that adds `target` and `rel` attributes if present
+    const Link = twc.a.attrs<LinkProps>((props) =>
+      props.$external ? { target: "_blank", rel: "noopener noreferrer" } : {},
+    )`appearance-none size-4 border-2 border-blue-500 rounded-sm bg-white`;
+
+    render(
+      <Link $external href="https://example.com">
+        My link
+      </Link>,
+    );
+    const link = screen.getByText("My link");
+    expect(link).toBeDefined();
+    expect(link.getAttribute("target")).toBe("_blank");
+    expect(link.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
   test("merges classes", () => {

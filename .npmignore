@@ -1,2 +1,3 @@
 /*
-!/dist/**/*.{ts,js}
+!/dist/index.d.ts
+!/dist/index.mjs
