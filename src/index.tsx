@@ -5,7 +5,7 @@ import { Slot } from "@radix-ui/react-slot";
 
 export { clsx as cx };
 
-type AbstractCompose = (...params: any) => string;
+type AbstractCompose = (...params: any) => any;
 
 type ResultProps<
   TComponent extends React.ElementType,
@@ -32,7 +32,9 @@ type Template<
     | TemplateStringsArray
     | ((
         props: ResultProps<TComponent, TProps, TExtraProps, TCompose>,
-      ) => Parameters<TCompose>[0]),
+      ) => "className" extends keyof TProps
+        ? TProps["className"]
+        : Parameters<TCompose>[0]),
   ...values: any[]
 ) => React.ForwardRefExoticComponent<
   ResultProps<TComponent, TProps, TExtraProps, TCompose>
@@ -98,7 +100,7 @@ function filterProps(
 
 type Attributes = Record<string, any> | ((props: any) => Record<string, any>);
 
-export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
+export const createTwc = <TCompose extends AbstractCompose>(
   config: Config<TCompose> = {},
 ) => {
   const compose = config.compose || clsx;
@@ -110,23 +112,30 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
         stringsOrFn: TemplateStringsArray | Function,
         ...values: any[]
       ) => {
-        const isFn = typeof stringsOrFn === "function";
-        const twClassName = isFn
-          ? ""
-          : String.raw({ raw: stringsOrFn }, ...values);
+        const isClassFn = typeof stringsOrFn === "function";
+        const tplClassName =
+          !isClassFn && String.raw({ raw: stringsOrFn }, ...values);
         return React.forwardRef((p: any, ref) => {
-          const { className, asChild, ...rest } = p;
+          const { className: classNameProp, asChild, ...rest } = p;
           const rp =
             typeof attrs === "function" ? attrs(p) : attrs ? attrs : {};
           const fp = filterProps({ ...rp, ...rest }, shouldForwardProp);
           const Comp = asChild ? Slot : Component;
+          const resClassName = isClassFn ? stringsOrFn(p) : tplClassName;
           return (
             <Comp
               ref={ref}
-              className={compose(
-                isFn ? stringsOrFn(p) : twClassName,
-                className,
-              )}
+              className={
+                typeof resClassName === "function"
+                  ? (renderProps: any) =>
+                      compose(
+                        resClassName(renderProps),
+                        typeof classNameProp === "function"
+                          ? classNameProp(renderProps)
+                          : classNameProp,
+                      )
+                  : compose(resClassName, classNameProp)
+              }
               {...fp}
             />
           );

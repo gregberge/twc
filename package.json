@@ -6,7 +6,8 @@
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
     }
   },
   "types": "./dist/index.d.ts",
@@ -49,6 +50,7 @@
     "happy-dom": "^12.10.3",
     "prettier": "^3.1.1",
     "react": "^18.2.0",
+    "react-aria-components": "^1.0.0",
     "rollup": "^4.9.1",
     "rollup-plugin-swc3": "^0.11.0",
     "rollup-plugin-ts": "^3.4.5",

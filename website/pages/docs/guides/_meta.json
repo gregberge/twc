@@ -4,5 +4,6 @@
   "refs": "Refs",
   "styling-any-component": "Styling any component",
   "additional-props": "Additional props",
-  "adapting-based-on-props": "Adapting based on props"
+  "adapting-based-on-props": "Adapting based on props",
+  "render-props": "Render Props"
 }
