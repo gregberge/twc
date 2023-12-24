@@ -4,6 +4,10 @@ import { cva, VariantProps } from "class-variance-authority";
 import { twc, createTwc, TwcComponentProps } from "./index";
 import * as React from "react";
 import { twMerge } from "tailwind-merge";
+import {
+  Button as AriaButton,
+  ButtonProps as AriaButtonProps,
+} from "react-aria-components";
 
 describe("twc", () => {
   beforeEach(cleanup);
@@ -198,5 +202,28 @@ describe("twc", () => {
     expect(title).toBeDefined();
     expect(title.classList.contains("font-medium")).toBe(true);
     expect(title.classList.contains("font-bold")).toBe(false);
+  });
+
+  test("works with render props", () => {
+    const Button = twc(AriaButton)<AriaButtonProps>(
+      (props) => (renderProps) =>
+        props["aria-pressed"] || renderProps.isPressed
+          ? "bg-gray-700"
+          : "bg-gray-500",
+    );
+
+    render(
+      <Button
+        aria-pressed
+        isDisabled
+        className={(p) => (p.isDisabled ? "opacity-35" : "")}
+      >
+        Press me
+      </Button>,
+    );
+    const button = screen.getByText("Press me");
+    expect(button).toBeDefined();
+    expect(button.classList.contains("bg-gray-700")).toBe(true);
+    expect(button.classList.contains("opacity-35")).toBe(true);
   });
 });

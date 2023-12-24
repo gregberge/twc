@@ -1,0 +1,21 @@
+# Render props
+
+Some libraries like [`react-aria-components`](https://react-spectrum.adobe.com/react-aria/index.html) or [Remix](https://remix.run/docs/en/main/components/nav-link) accepts a function as `className`. `tsc` supports render props out of the box.
+
+## Usage
+
+In this example, we use a render props to change the class of a [`react-aria-components` button](https://react-spectrum.adobe.com/react-aria/Button.html) when the button is pressed.
+
+```tsx {5,6}
+import { twc } from 'react-twc'
+import { Button as AriaButton, ButtonProps } from "react-aria-components";
+
+const Button = twc(AriaButton)<ButtonProps>(
+  (props) => (({ isPressed })) =>
+    isPressed ? "bg-gray-700" : "bg-gray-500",
+);
+
+export default () => (
+  <Button>Click me</Button>
+);
+```
