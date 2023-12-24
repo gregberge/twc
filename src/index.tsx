@@ -34,7 +34,7 @@ type Template<
         props: ResultProps<TComponent, TProps, TExtraProps, TCompose>,
       ) => Parameters<TCompose>[0]),
   ...values: any[]
-) => React.ComponentType<
+) => React.ForwardRefExoticComponent<
   ResultProps<TComponent, TProps, TExtraProps, TCompose>
 >;
 
