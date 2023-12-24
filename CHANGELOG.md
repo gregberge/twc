@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/gregberge/twc/compare/v1.1.0...v1.1.1) (2023-12-24)
+
+
+### Bug Fixes
+
+* fix ref type ([7abc412](https://github.com/gregberge/twc/commit/7abc412ccd8b5cef5407bcde3c81908014775cd0)), closes [#21](https://github.com/gregberge/twc/issues/21)
+
 ## [1.1.0](https://github.com/gregberge/twc/compare/v1.0.1...v1.1.0) (2023-12-23)
 
 
