@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/gregberge/twc/compare/v1.1.1...v1.2.0) (2023-12-24)
+
+
+### Features
+
+* support render props ([05f7bc0](https://github.com/gregberge/twc/commit/05f7bc0d0424e9a73b8e529aa3b7c1ab38546a86)), closes [#11](https://github.com/gregberge/twc/issues/11)
+
 ### [1.1.1](https://github.com/gregberge/twc/compare/v1.1.0...v1.1.1) (2023-12-24)
 
 
