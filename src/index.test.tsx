@@ -8,6 +8,7 @@ import {
   Button as AriaButton,
   ButtonProps as AriaButtonProps,
 } from "react-aria-components";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
 
 describe("twc", () => {
   beforeEach(cleanup);
@@ -225,5 +226,12 @@ describe("twc", () => {
     expect(button).toBeDefined();
     expect(button.classList.contains("bg-gray-700")).toBe(true);
     expect(button.classList.contains("opacity-35")).toBe(true);
+  });
+
+  test("props are correctly typed", () => {
+    const Accordion = twc(AccordionPrimitive.Root)<
+      React.ComponentProps<typeof AccordionPrimitive.Root>
+    >`py-2`;
+    render(<Accordion type="single" collapsible></Accordion>);
   });
 });

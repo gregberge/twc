@@ -10,7 +10,6 @@ import { Steps } from "nextra/components";
 npm i react-twc
 ```
 
-
 ### Setup autocompletion in your editor
 
 You can enable Tailwind autocompletion inside `twc` using the steps below:
@@ -26,7 +25,7 @@ You can enable Tailwind autocompletion inside `twc` using the steps below:
     {
       "tailwindCSS.experimental.classRegex": [
         "twc\\.[^`]+`([^`]*)`",
-        "twc\\(.*?\\).*?`([^)]*)",
+        "twc\\(.*?\\).*?`([^`]*)",
         ["twc\\.[^`]+\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
         ["twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
       ]
@@ -47,7 +46,7 @@ You can enable Tailwind autocompletion inside `twc` using the steps below:
           experimental = {
             classRegex = {
               "twc\\.[^`]+`([^`]*)`",
-              "twc\\(.*?\\).*?`([^)]*)",
+              "twc\\(.*?\\).*?`([^`]*)",
               { "twc\\.[^`]+\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
               { "twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" }
             },
@@ -71,7 +70,7 @@ You can enable Tailwind autocompletion inside `twc` using the steps below:
       "experimental": {
         "classRegex": [
           "twc\\.[^`]+`([^`]*)`",
-          "twc\\(.*?\\).*?`([^)]*)",
+          "twc\\(.*?\\).*?`([^`]*)",
           ["twc\\.[^`]+\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
           ["twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
         ]
