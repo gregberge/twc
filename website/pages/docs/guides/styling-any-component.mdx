@@ -33,3 +33,25 @@ const HoverCardContent = twc(HoverCard.Content).attrs({
   sideOffset: 5,
 })`data-[side=bottom]:animate-slideUpAndFade data-[side=right]:animate-slideLeftAndFade data-[side=left]:animate-slideRightAndFade data-[side=top]:animate-slideDownAndFade w-[300px] rounded-md bg-white p-5 shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] data-[state=open]:transition-all`;
 ```
+
+## Specify props
+
+When you wrap a component with `twc`, it infers the component's props automatically. However, this can sometimes result in unpredictable behavior. In such scenarios, it's better to define the props manually.
+
+For example, with the [`@radix-ui/react-accordion`](https://www.radix-ui.com/primitives/docs/components/accordion#accordion) component, its complex props like `type` and `collapsible` might not be inferred correctly by twc. To prevent issues, explicitly declare these props when using `twc`. This explicit declaration ensures accurate prop handling, avoiding potential problems.
+
+```tsx
+import * as React from 'react'
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { twc } from "react-twc";
+
+const Accordion = twc(AccordionPrimitive.Root)<React.ComponentProps<typeof AccordionPrimitive.Root>>`py-2`;
+
+export default () => {
+  return (
+    {/* This work without any type error, `collapsible` is authorized when `type="single"` */}
+    <Accordion type="single" collapsible>
+    </Accordion>
+  );
+}
+```
