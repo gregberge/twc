@@ -100,7 +100,7 @@ function filterProps(
 
 type Attributes = Record<string, any> | ((props: any) => Record<string, any>);
 
-export const createTwc = <TCompose extends AbstractCompose>(
+export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
   config: Config<TCompose> = {},
 ) => {
   const compose = config.compose || clsx;
