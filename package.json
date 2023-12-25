@@ -1,6 +1,6 @@
 {
   "name": "react-twc",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Create reusable Tailwind CSS components with React.",
   "type": "module",
   "exports": {
