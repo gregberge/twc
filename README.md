@@ -1,8 +1,8 @@
-![TWC — Supercharge React + Tailwind](.github/assets/banner.png "TWC — Supercharge React + Tailwind")
+![TWC — Supercharge React + Tailwind CSS](.github/assets/banner.png "TWC — Supercharge React + Tailwind CSS")
 
 <p align="center">
   <br/>
-  <a href="https://react-twc.vercel.app">TWC</a> creates reusable React + Tailwind components in one line
+  <a href="https://react-twc.vercel.app">TWC</a> creates reusable React + Tailwind CSS components in one line
   <br/><br/>
 </p>
 

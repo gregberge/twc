@@ -95,7 +95,7 @@ export default async function (req) {
             letterSpacing: -1,
           }}
         >
-          Supercharge React + Tailwind
+          Supercharge React + Tailwind CSS
         </p>
         <h1
           style={

@@ -120,11 +120,11 @@ export default {
         <meta httpEquiv="Content-Language" content="en" />
         <meta
           name="description"
-          content="Create reusable React Tailwind components."
+          content="Create reusable React Tailwind CSS components."
         />
         <meta
           name="og:description"
-          content="Create reusable React Tailwind components."
+          content="Create reusable React Tailwind CSS components."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={socialCard} />
