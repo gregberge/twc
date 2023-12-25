@@ -48,7 +48,7 @@ export default async function (req) {
           fill="none"
           viewBox="0 0 446 230"
           style={{ position: "absolute", top: 70, left: 80 }}
-          height="40"
+          height="80"
         >
           <g clipPath="url(#a)">
             <path
