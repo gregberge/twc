@@ -40,6 +40,11 @@ type Template<
   ResultProps<TComponent, TProps, TExtraProps, TCompose>
 >;
 
+type ElementTagName = Exclude<
+  keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap,
+  "set"
+>;
+
 type FirstLevelTemplate<
   TComponent extends React.ElementType,
   TCompose extends AbstractCompose,
@@ -57,7 +62,7 @@ type FirstLevelTemplate<
 type Twc<TCompose extends AbstractCompose> = (<T extends React.ElementType>(
   component: T,
 ) => FirstLevelTemplate<T, TCompose, undefined>) & {
-  [Key in keyof HTMLElementTagNameMap]: FirstLevelTemplate<
+  [Key in ElementTagName]: FirstLevelTemplate<
     Key,
     TCompose,
     { asChild?: boolean }

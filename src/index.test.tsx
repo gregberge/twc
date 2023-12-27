@@ -234,4 +234,12 @@ describe("twc", () => {
     >`py-2`;
     render(<Accordion type="single" collapsible></Accordion>);
   });
+
+  test("allows svg", () => {
+    const Svg = twc.svg`text-xl`;
+    render(<Svg data-testid="svg" />);
+    const svg = screen.getByTestId("svg");
+    expect(svg).toBeDefined();
+    expect(svg.tagName).toBe("SVG");
+  });
 });
