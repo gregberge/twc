@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://github.com/gregberge/twc/compare/v1.2.1...v1.2.2) (2023-12-27)
+
+
+### Bug Fixes
+
+* **types:** support svg tags ([46edf5c](https://github.com/gregberge/twc/commit/46edf5cb740bc6614fddff525f70e76e2ee14d44)), closes [#27](https://github.com/gregberge/twc/issues/27)
+
 ### [1.2.1](https://github.com/gregberge/twc/compare/v1.2.0...v1.2.1) (2023-12-25)
 
 
