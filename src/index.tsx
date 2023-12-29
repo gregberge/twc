@@ -50,6 +50,9 @@ type FirstLevelTemplate<
   TCompose extends AbstractCompose,
   TExtraProps,
 > = Template<TComponent, TCompose, TExtraProps> & {
+  /**
+   * Add additional props to the component.
+   */
   attrs: <TProps = undefined>(
     attrs:
       | Record<string, any>
@@ -57,6 +60,13 @@ type FirstLevelTemplate<
           props: ResultProps<TComponent, TProps, TExtraProps, TCompose>,
         ) => Record<string, any>),
   ) => Template<TComponent, TCompose, TExtraProps, TProps>;
+} & {
+  /**
+   * Prevent props from being forwarded to the component.
+   */
+  transientProps: (
+    fn: string[] | ((prop: string) => boolean),
+  ) => FirstLevelTemplate<TComponent, TCompose, TExtraProps>;
 };
 
 type Twc<TCompose extends AbstractCompose> = (<T extends React.ElementType>(
@@ -68,8 +78,6 @@ type Twc<TCompose extends AbstractCompose> = (<T extends React.ElementType>(
     { asChild?: boolean }
   >;
 };
-
-type ShouldForwardProp = (prop: string) => boolean;
 
 export type TwcComponentProps<
   TComponent extends React.ElementType,
@@ -85,12 +93,12 @@ export type Config<TCompose extends AbstractCompose> = {
    * The function to use to determine if a prop should be forwarded to the
    * underlying component. Defaults to `prop => prop[0] !== "$"`.
    */
-  shouldForwardProp?: ShouldForwardProp;
+  shouldForwardProp?: (prop: string) => boolean;
 };
 
 function filterProps(
   props: Record<string, any>,
-  shouldForwardProp: ShouldForwardProp,
+  shouldForwardProp: (prop: string) => boolean,
 ) {
   const filteredProps: Record<string, any> = {};
   const keys = Object.keys(props);
@@ -109,10 +117,13 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
   config: Config<TCompose> = {},
 ) => {
   const compose = config.compose || clsx;
-  const shouldForwardProp =
+  const defaultShouldForwardProp =
     config.shouldForwardProp || ((prop) => prop[0] !== "$");
   const wrap = (Component: React.ElementType) => {
-    const createTemplate = (attrs?: Attributes) => {
+    const createTemplate = (
+      attrs?: Attributes,
+      shouldForwardProp = defaultShouldForwardProp,
+    ) => {
       const template = (
         stringsOrFn: TemplateStringsArray | Function,
         ...values: any[]
@@ -145,6 +156,16 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
             />
           );
         });
+      };
+
+      template.transientProps = (
+        fnOrArray: string[] | ((prop: string) => boolean),
+      ) => {
+        const shouldForwardProp =
+          typeof fnOrArray === "function"
+            ? (prop: string) => !fnOrArray(prop)
+            : (prop: string) => !fnOrArray.includes(prop);
+        return createTemplate(attrs, shouldForwardProp);
       };
 
       if (attrs === undefined) {
