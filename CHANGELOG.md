@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/gregberge/twc/compare/v1.2.2...v1.3.0) (2023-12-29)
+
+
+### Features
+
+* allow to configure transient props ([15fc3b6](https://github.com/gregberge/twc/commit/15fc3b619b1e8356d66c1556887dd2db123b177c)), closes [#29](https://github.com/gregberge/twc/issues/29)
+
+
+### Bug Fixes
+
+* **types:** make types first in exports ([98c6d23](https://github.com/gregberge/twc/commit/98c6d23a2ffc3a99df8671667e9be98f3c144d25))
+
 ### [1.2.2](https://github.com/gregberge/twc/compare/v1.2.1...v1.2.2) (2023-12-27)
 
 
