@@ -1,6 +1,6 @@
 # Adapting based on props
 
-You can pass a function to `twc` to adapt the components based on props.
+You can pass a function to `twc` to adapt the classes based on props.
 
 ## Usage
 
@@ -30,7 +30,7 @@ return props accepted by a `twc` component. It's similar to `React.ComponentProp
 <details>
   <summary>Why is the prop prefixed by a dollar?</summary>
 
-We call the prop `$primary` a "transient prop", transient props can be consumed by the components but are not passed to the underlying components. It our case, it means the `<button>` will not get a `<button $primary="true">` attribute in the DOM.
+We call the prop `$primary` a "transient prop". A transient prop starts with a `$`, it can be consumed by the uppermost component layer but are not passed to the underlying components. It our case, it means the `<button>` will not get a `<button $primary="true">` attribute in the DOM.
 
 </details>
 
@@ -65,4 +65,53 @@ export default () => (
     <Button $intent="secondary">Secondary button</Button>
   </div>
 );
+```
+
+## Customize transient props
+
+By default, all props starting with a `$` are considered _transient_. This is a is a hint that it is meant exclusively for the uppermost component layer and should not be passed further down. In other terms, it prevents your DOM element to have unexpected props.
+
+If you don't like the `$` prefix, you can customize transient props for a specific component using `transientProps` constructor.
+
+```tsx /transientProps(["primary"])/
+import { twc, TwcComponentProps } from "react-twc";
+
+type ButtonProps = TwcComponentProps<"button"> & { primary?: boolean };
+
+// The "primary" prop is marked as transient
+const Button = twc.button.transientProps(["primary"])<ButtonProps>((props) => [
+  "font-semibold border border-blue-500 rounded",
+  props.primary ? "bg-blue-500 text-white" : "bg-white text-gray-800",
+]);
+
+export default () => (
+  <div>
+    <Button>Normal</Button>
+    {/* The "primary" attribute will not be forwarded to the <button> element. */}
+    <Button primary>Primary</Button>
+  </div>,
+);
+```
+
+`transientProps` also accepts a function:
+
+```tsx /transientProps/
+const Button = twc.button.transientProps(
+  (prop) => prop === "primary",
+)<ButtonProps>((props) => [
+  "font-semibold border border-blue-500 rounded",
+  props.primary ? "bg-blue-500 text-white" : "bg-white text-gray-800",
+]);
+```
+
+It is also possible to configure this behaviour globally by creating a custom instance of `twc`:
+
+```ts {5,6}
+import { clsx } from "clsx";
+import { createTwc } from "react-twc";
+
+export const twx = createTwc({
+  // Forward all props not starting by "_"
+  shouldForwardProp: (prop) => prop[0] !== "_",
+});
 ```

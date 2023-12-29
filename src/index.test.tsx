@@ -131,16 +131,53 @@ describe("twc", () => {
 
   test("accepts a function to define className", () => {
     type Props = {
-      size: "sm" | "lg";
+      $size: "sm" | "lg";
       children: React.ReactNode;
     };
     const Title = twc.h1<Props>((props) => ({
-      "text-xl": props.size === "lg",
-      "text-sm": props.size === "sm",
+      "text-xl": props.$size === "lg",
+      "text-sm": props.$size === "sm",
     }));
-    render(<Title size="sm">Title</Title>);
+    render(<Title $size="sm">Title</Title>);
     const title = screen.getByText("Title");
     expect(title).toBeDefined();
+    expect(title.getAttribute("$size")).toBe(null);
+    expect(title.tagName).toBe("H1");
+    expect(title.classList.contains("text-sm")).toBe(true);
+  });
+
+  test("allows to customize transient props using array", () => {
+    type Props = {
+      xsize: "sm" | "lg";
+      children: React.ReactNode;
+    };
+    const Title = twc.h1.transientProps(["xsize"])<Props>((props) => ({
+      "text-xl": props.xsize === "lg",
+      "text-sm": props.xsize === "sm",
+    }));
+    render(<Title xsize="sm">Title</Title>);
+    const title = screen.getByText("Title");
+    expect(title).toBeDefined();
+    expect(title.getAttribute("xsize")).toBe(null);
+    expect(title.tagName).toBe("H1");
+    expect(title.classList.contains("text-sm")).toBe(true);
+  });
+
+  test("allows to customize transient props using function", () => {
+    type Props = {
+      xsize: "sm" | "lg";
+      children: React.ReactNode;
+    };
+    const Title = twc.h1.transientProps((prop) => prop === "xsize")<Props>(
+      (props) => ({
+        "text-xl": props.xsize === "lg",
+        "text-sm": props.xsize === "sm",
+      }),
+    );
+    render(<Title xsize="sm">Title</Title>);
+    const title = screen.getByText("Title");
+    expect(title).toBeDefined();
+    expect(title.getAttribute("xsize")).toBe(null);
     expect(title.tagName).toBe("H1");
     expect(title.classList.contains("text-sm")).toBe(true);
   });

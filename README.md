@@ -8,7 +8,7 @@
 
 ## Features
 
-- ⚡️ Lightweight — only 0.46kb
+- ⚡️ Lightweight — only 0.49kb
 - ✨ Autocompletion in all editors
 - 🎨 Adapt the style based on props
 - ♻️ Reuse classes with `asChild` prop
