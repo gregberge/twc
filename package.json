@@ -31,7 +31,10 @@
   ],
   "author": "Greg Bergé",
   "license": "MIT",
-  "repository": "github:gregberge/twc",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregberge/twc.git"
+  },
   "homepage": "https://react-twc.vercel.app",
   "funding": {
     "type": "github",
