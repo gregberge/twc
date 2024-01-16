@@ -55,7 +55,8 @@ type FirstLevelTemplate<
    */
   attrs: <TProps = undefined>(
     attrs:
-      | Record<string, any>
+      | (Omit<React.ComponentProps<TComponent>, "className"> &
+          Record<string, any>)
       | ((
           props: ResultProps<TComponent, TProps, TExtraProps, TCompose>,
         ) => Record<string, any>),
