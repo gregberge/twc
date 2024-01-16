@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/gregberge/twc/compare/v1.3.0...v1.4.0) (2024-01-16)
+
+
+### Features
+
+* **attrs:** enable autocomplete for props ([#39](https://github.com/gregberge/twc/issues/39)) ([9cb840c](https://github.com/gregberge/twc/commit/9cb840c06304f9bdc211aa8bad5b516837ac38f0))
+
 ## [1.3.0](https://github.com/gregberge/twc/compare/v1.2.2...v1.3.0) (2023-12-29)
 
 
