@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/gregberge/twc/compare/v1.4.0...v1.4.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* **attrs:** accept partial props in attrs ([#41](https://github.com/gregberge/twc/issues/41)) ([026441b](https://github.com/gregberge/twc/commit/026441b1d7bf74a21a897d755ca6970de71aba29))
+
 ## [1.4.0](https://github.com/gregberge/twc/compare/v1.3.0...v1.4.0) (2024-01-16)
 
 
