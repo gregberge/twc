@@ -29,6 +29,20 @@ const buildEs = ({
   plugins: [swcPlugin],
 });
 
+const buildCjs = ({
+  input = "src/index.tsx",
+  output = "dist/index.cjs",
+  external = ignoreRelative,
+} = {}) => ({
+  input,
+  external,
+  output: {
+    file: output,
+    format: "cjs",
+  },
+  plugins: [swcPlugin],
+});
+
 const buildTypes = ({
   input = "src/index.tsx",
   output = "dist/index.d.ts",
@@ -43,4 +57,4 @@ const buildTypes = ({
   plugins: [tsPlugin],
 });
 
-export default [buildEs(), buildTypes()];
+export default [buildEs(), buildCjs(), buildTypes()];
