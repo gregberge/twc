@@ -22,14 +22,12 @@ You can enable Tailwind CSS autocompletion inside `twc` using the steps below:
     2. Add the following to your [`settings.json`](https://code.visualstudio.com/docs/getstarted/settings):
 
     ```json
-    {
-      "tailwindCSS.experimental.classRegex": [
-        "twc\\.[^`]+`([^`]*)`",
-        "twc\\(.*?\\).*?`([^`]*)",
+    "tailwindCSS.experimental.classRegex": [
+        "twc\\.[^`]+`([^`]*)`", 
+        "twc\\([^`]*?\\)`([^`]*)`",
         ["twc\\.[^`]+\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
-        ["twc\\(.*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
-      ]
-    }
+        ["twc\\([^`]*?\\).*?\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+    ]
     ```
 
   </Tab>
