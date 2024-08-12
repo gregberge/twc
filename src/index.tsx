@@ -171,7 +171,7 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
 
       if (attrs === undefined) {
         template.attrs = (attrs: Attributes) => {
-          return createTemplate(attrs);
+          return createTemplate(attrs, shouldForwardProp);
         };
       }
 
