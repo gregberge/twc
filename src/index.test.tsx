@@ -279,4 +279,20 @@ describe("twc", () => {
     expect(svg).toBeDefined();
     expect(svg.tagName).toBe("SVG");
   });
+
+  test("component props from attrs should respect provided transient props", () => {
+    type ButtonProps = TwcComponentProps<"button"> & {
+      variant: "primary" | "secondary";
+    };
+    const Button = twc.button
+      .transientProps(["variant"])
+      .attrs<ButtonProps>(({ type = "button", variant }) => {
+        expect(variant).toBe("primary");
+        return { type };
+      })`text-xl`;
+    render(<Button data-testid="button" variant="primary" />);
+
+    const renderedButton = screen.getByTestId("button");
+    expect(renderedButton.getAttribute("variant")).toBeNull();
+  });
 });
