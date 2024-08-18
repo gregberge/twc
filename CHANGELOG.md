@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.2](https://github.com/gregberge/twc/compare/v1.4.1...v1.4.2) (2024-08-18)
+
+
+### Bug Fixes
+
+* component props from attrs not respecting provided transient props ([b48d22d](https://github.com/gregberge/twc/commit/b48d22dd62eccccf4c208cec2ac8d96165d2ab04))
+
 ### [1.4.1](https://github.com/gregberge/twc/compare/v1.4.0...v1.4.1) (2024-01-18)
 
 
