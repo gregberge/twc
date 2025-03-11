@@ -30,6 +30,17 @@ describe("twc", () => {
     expect(title.dataset.foo).toBe("bar");
   });
 
+  test("allows to pass extra props", () => {
+    const Title = twc.div<{ $isHidden?: boolean }>(props => `
+      ${props.$isHidden && "hidden"}
+    `);
+    render(<Title $isHidden aria-hidden="true">Title</Title>);
+    const title = screen.getByText("Title");
+    expect(title).toBeDefined();
+    expect(title.classList.contains("hidden")).toBe(true);
+    expect(title.getAttribute("aria-hidden")).toBe("true");
+  });
+
   test("supports attrs", () => {
     const Checkbox = twc.input.attrs({ type: "checkbox" })`text-xl`;
     render(<Checkbox data-testid="checkbox" />);
@@ -57,7 +68,7 @@ describe("twc", () => {
   });
 
   test("complex attrs support", () => {
-    type LinkProps = TwcComponentProps<"a"> & { $external?: boolean };
+    type LinkProps = { $external?: boolean };
 
     // Accept an $external prop that adds `target` and `rel` attributes if present
     const Link = twc.a.attrs<LinkProps>((props) =>
@@ -94,10 +105,8 @@ describe("twc", () => {
   });
 
   test("accepts custom props", () => {
-    type TitleProps = { children: React.ReactNode; className?: string };
-    const Title = twc.h1<TitleProps>`text-xl`;
+    const Title = twc.h1`text-xl`;
     render(
-      // @ts-expect-error `title` is not a valid prop
       <Title className="font-medium" title="x">
         Title
       </Title>,
@@ -111,7 +120,7 @@ describe("twc", () => {
   test("accepts custom components", () => {
     const CustomTitle = React.forwardRef(
       (
-        props: { className?: string },
+        props,
         ref: React.ForwardedRef<HTMLHeadingElement>,
       ) => (
         <h1 ref={ref} {...props}>
@@ -129,16 +138,28 @@ describe("twc", () => {
     expect(title.classList.contains("font-medium")).toBe(true);
   });
 
+  test("accepts custom components with extra props", () => {
+    const Link: React.FC<React.ComponentProps<"a">> = (props) => <a {...props}>Custom Link</a>;
+
+    const StyledLink = twc(Link)<{ $isActive?: boolean }>((props) => `text-xl ${props.$isActive ? "underlined" : ""}`);
+    render(<StyledLink href="https://example.com" $isActive className="font-medium" />);
+    const link = screen.getByText("Custom Link");
+    expect(link).toBeDefined();
+    expect(link.tagName).toBe("A");
+    expect(link.classList.contains("text-xl")).toBe(true);
+    expect(link.classList.contains("font-medium")).toBe(true);
+    expect(link.classList.contains("underlined")).toBe(true);
+  });
+
   test("accepts a function to define className", () => {
     type Props = {
       $size: "sm" | "lg";
-      children: React.ReactNode;
     };
     const Title = twc.h1<Props>((props) => ({
       "text-xl": props.$size === "lg",
       "text-sm": props.$size === "sm",
     }));
-    render(<Title $size="sm">Title</Title>);
+    render(<Title role="heading" $size="sm">Title</Title>);
     const title = screen.getByText("Title");
     expect(title).toBeDefined();
     expect(title.getAttribute("$size")).toBe(null);
@@ -149,7 +170,6 @@ describe("twc", () => {
   test("allows to customize transient props using array", () => {
     type Props = {
       xsize: "sm" | "lg";
-      children: React.ReactNode;
     };
     const Title = twc.h1.transientProps(["xsize"])<Props>((props) => ({
       "text-xl": props.xsize === "lg",
@@ -166,7 +186,6 @@ describe("twc", () => {
   test("allows to customize transient props using function", () => {
     type Props = {
       xsize: "sm" | "lg";
-      children: React.ReactNode;
     };
     const Title = twc.h1.transientProps((prop) => prop === "xsize")<Props>(
       (props) => ({
@@ -195,8 +214,7 @@ describe("twc", () => {
       },
     });
 
-    type ButtonProps = React.ComponentProps<"button"> &
-      VariantProps<typeof button>;
+    type ButtonProps = VariantProps<typeof button>;
 
     const Button = twc.button<ButtonProps>(({ $intent }) =>
       button({ $intent }),

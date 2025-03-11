@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { clsx } from "clsx";
 import { Slot } from "@radix-ui/react-slot";
@@ -20,25 +19,34 @@ type ResultProps<
     : Omit<React.ComponentProps<TComponent>, "className"> & {
         className?: Parameters<TCompose>[0];
       } & TExtraProps
-  : TProps;
+  : TProps & Omit<React.ComponentProps<TComponent>, keyof TProps>;
+
+type StyleValue<
+  TComponent extends React.ElementType,
+  TProps,
+  TExtraProps,
+  TCompose extends AbstractCompose
+> =
+  | TemplateStringsArray
+  | string
+  | Record<string, boolean>
+  | ((props: ResultProps<TComponent, TProps, TExtraProps, TCompose>) =>
+      | string
+      | Record<string, boolean>
+      | ((renderProps: any) => string | Record<string, boolean>));
 
 type Template<
   TComponent extends React.ElementType,
   TCompose extends AbstractCompose,
   TExtraProps,
   TParentProps = undefined,
-> = <TProps = TParentProps>(
-  strings:
-    | TemplateStringsArray
-    | ((
-        props: ResultProps<TComponent, TProps, TExtraProps, TCompose>,
-      ) => "className" extends keyof TProps
-        ? TProps["className"]
-        : Parameters<TCompose>[0]),
-  ...values: any[]
-) => React.ForwardRefExoticComponent<
-  ResultProps<TComponent, TProps, TExtraProps, TCompose>
->;
+> = {
+  <TProps = TParentProps>(
+    strings: StyleValue<TComponent, TProps, TExtraProps, TCompose>,
+  ): React.ForwardRefExoticComponent<
+    ResultProps<TComponent, TProps, TExtraProps, TCompose>
+  >;
+};
 
 type ElementTagName = Exclude<
   keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap,
@@ -49,7 +57,13 @@ type FirstLevelTemplate<
   TComponent extends React.ElementType,
   TCompose extends AbstractCompose,
   TExtraProps,
-> = Template<TComponent, TCompose, TExtraProps> & {
+> = {
+  <TProps = undefined>(
+    strings: StyleValue<TComponent, TProps, TExtraProps, TCompose>,
+  ): React.ForwardRefExoticComponent<
+    ResultProps<TComponent, TProps, TExtraProps, TCompose>
+  >;
+} & {
   /**
    * Add additional props to the component.
    */
@@ -61,7 +75,6 @@ type FirstLevelTemplate<
           props: ResultProps<TComponent, TProps, TExtraProps, TCompose>,
         ) => Record<string, any>),
   ) => Template<TComponent, TCompose, TExtraProps, TProps>;
-} & {
   /**
    * Prevent props from being forwarded to the component.
    */
