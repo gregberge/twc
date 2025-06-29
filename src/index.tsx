@@ -95,6 +95,12 @@ export type Config<TCompose extends AbstractCompose> = {
    * underlying component. Defaults to `prop => prop[0] !== "$"`.
    */
   shouldForwardProp?: (prop: string) => boolean;
+
+  /**
+   * The flag responsible for behavior of asChild prop. When true asChild
+   * prop would be forwarded to the underlying component. Defaults to `false`
+   */
+  shouldForwardAsChild?: boolean;
 };
 
 function filterProps(
@@ -137,7 +143,9 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
           const rp =
             typeof attrs === "function" ? attrs(p) : attrs ? attrs : {};
           const fp = filterProps({ ...rp, ...rest }, shouldForwardProp);
-          const Comp = asChild ? Slot : Component;
+          const shouldForwardAsChild =
+            config.shouldForwardAsChild && typeof Component !== "string";
+          const Comp = !shouldForwardAsChild && asChild ? Slot : Component;
           const resClassName = isClassFn ? stringsOrFn(p) : tplClassName;
           return (
             <Comp
@@ -153,6 +161,7 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
                       )
                   : compose(resClassName, classNameProp)
               }
+              asChild={shouldForwardAsChild ? asChild : undefined}
               {...fp}
             />
           );

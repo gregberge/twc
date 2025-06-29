@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach } from "vitest";
+import { describe, expect, test, beforeEach, vi } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { cva, VariantProps } from "class-variance-authority";
 import { twc, createTwc, TwcComponentProps } from "./index";
@@ -9,6 +9,7 @@ import {
   ButtonProps as AriaButtonProps,
 } from "react-aria-components";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { Slot } from "@radix-ui/react-slot";
 
 describe("twc", () => {
   beforeEach(cleanup);
@@ -226,6 +227,38 @@ describe("twc", () => {
     expect(title).toBeDefined();
     expect(title.tagName).toBe("H2");
     expect(title.classList.contains("text-xl")).toBe(true);
+  });
+
+  test('forwards "asChild" property to custom component when "shouldForwardAsChild" is true', () => {
+    const twx = createTwc({
+      shouldForwardAsChild: true,
+    });
+
+    type PrimitiveProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+      asChild?: boolean;
+    };
+
+    const handleClick = vi.fn<[React.MouseEvent<HTMLButtonElement>], void>()
+    const Primitive = ({ asChild, ...props }: PrimitiveProps) => {
+      const Comp = asChild ? Slot : 'button'
+      return <Comp onClick={handleClick} {...props}/>;
+    };
+
+    const StyledPrimitive = twx(Primitive)`text-xl`
+
+    render(
+      <StyledPrimitive asChild>
+        <a>Click me!</a>
+      </StyledPrimitive>
+    )
+
+    const element = screen.getByText('Click me!')
+    element.click()
+
+    expect(element.tagName).toBeDefined()
+    expect(element.tagName).toBe('A')
+    expect(element.classList.contains('text-xl')).toBe(true)
+    expect(handleClick).toBeCalled()
   });
 
   test("works with tailwind-merge", () => {
