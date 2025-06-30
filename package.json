@@ -6,14 +6,14 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "default": "./dist/index.mjs"
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "types": "./dist/index.d.ts",
   "scripts": {
     "test": "vitest",
-    "build": "rm -rf dist && rollup -c",
+    "build": "rm -rf dist && tsup",
     "format": "prettier --write .",
     "check-format": "prettier --check src",
     "lint": "eslint .",
@@ -55,13 +55,11 @@
     "happy-dom": "^18.0.1",
     "prettier": "^3.6.2",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
     "react-aria-components": "^1.10.1",
-    "rollup": "^4.44.1",
-    "rollup-plugin-swc3": "^0.12.1",
-    "rollup-plugin-ts": "^3.4.5",
+    "react-dom": "^19.1.0",
     "standard-version": "^9.5.0",
     "tailwind-merge": "^3.3.1",
+    "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   },

@@ -196,7 +196,7 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
     },
     {
       get(_, name) {
-        return wrap(name as keyof JSX.IntrinsicElements);
+        return wrap(name as any);
       },
     },
   ) as any as Twc<TCompose>;
