@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { clsx } from "clsx";
 import { Slot } from "@radix-ui/react-slot";
