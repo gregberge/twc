@@ -229,9 +229,9 @@ describe("twc", () => {
     expect(title.classList.contains("text-xl")).toBe(true);
   });
 
-  test('forwards "asChild" property to custom component when "shouldForwardAsChild" is true', () => {
+  test('forwards "asChild" property to custom component when "forwardAsChild" is true', () => {
     const twx = createTwc({
-      shouldForwardAsChild: true,
+      forwardAsChild: true,
     });
 
     type PrimitiveProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
