@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/gregberge/twc/compare/v1.4.2...v1.5.0) (2025-06-30)
+
+
+### Features
+
+* allow to forward `asChild` property ([#54](https://github.com/gregberge/twc/issues/54)) ([f5abd29](https://github.com/gregberge/twc/commit/f5abd292716a41ff780a73633ea31a967c44e2de)), closes [#53](https://github.com/gregberge/twc/issues/53)
+* rename `shouldForwardAsChild` to `forwardAsChild` ([e211b83](https://github.com/gregberge/twc/commit/e211b83a157c9bb829202887c358d943e1676f75))
+
 ### [1.4.2](https://github.com/gregberge/twc/compare/v1.4.1...v1.4.2) (2024-08-18)
 
 
