@@ -5,13 +5,11 @@ runs:
   using: composite
   steps:
     - uses: pnpm/action-setup@v4
-      with:
-        version: 9
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 18.x
+        node-version: 22.x
         registry-url: "https://registry.npmjs.org"
         cache: "pnpm"
 

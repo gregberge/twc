@@ -229,36 +229,36 @@ describe("twc", () => {
     expect(title.classList.contains("text-xl")).toBe(true);
   });
 
-  test('forwards "asChild" property to custom component when "shouldForwardAsChild" is true', () => {
+  test('forwards "asChild" property to custom component when "forwardAsChild" is true', () => {
     const twx = createTwc({
-      shouldForwardAsChild: true,
+      forwardAsChild: true,
     });
 
     type PrimitiveProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
       asChild?: boolean;
     };
 
-    const handleClick = vi.fn<[React.MouseEvent<HTMLButtonElement>], void>()
+    const handleClick = vi.fn();
     const Primitive = ({ asChild, ...props }: PrimitiveProps) => {
-      const Comp = asChild ? Slot : 'button'
-      return <Comp onClick={handleClick} {...props}/>;
+      const Comp = asChild ? Slot : "button";
+      return <Comp onClick={handleClick} {...props} />;
     };
 
-    const StyledPrimitive = twx(Primitive)`text-xl`
+    const StyledPrimitive = twx(Primitive)`text-xl`;
 
     render(
       <StyledPrimitive asChild>
         <a>Click me!</a>
-      </StyledPrimitive>
-    )
+      </StyledPrimitive>,
+    );
 
-    const element = screen.getByText('Click me!')
-    element.click()
+    const element = screen.getByText("Click me!");
+    element.click();
 
-    expect(element.tagName).toBeDefined()
-    expect(element.tagName).toBe('A')
-    expect(element.classList.contains('text-xl')).toBe(true)
-    expect(handleClick).toBeCalled()
+    expect(element.tagName).toBeDefined();
+    expect(element.tagName).toBe("A");
+    expect(element.classList.contains("text-xl")).toBe(true);
+    expect(handleClick).toBeCalled();
   });
 
   test("works with tailwind-merge", () => {
@@ -310,7 +310,7 @@ describe("twc", () => {
     render(<Svg data-testid="svg" />);
     const svg = screen.getByTestId("svg");
     expect(svg).toBeDefined();
-    expect(svg.tagName).toBe("SVG");
+    expect(svg.tagName).toBe("svg");
   });
 
   test("component props from attrs should respect provided transient props", () => {

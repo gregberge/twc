@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { clsx } from "clsx";
 import { Slot } from "@radix-ui/react-slot";
@@ -100,7 +99,7 @@ export type Config<TCompose extends AbstractCompose> = {
    * The flag responsible for behavior of asChild prop. When true asChild
    * prop would be forwarded to the underlying component. Defaults to `false`
    */
-  shouldForwardAsChild?: boolean;
+  forwardAsChild?: boolean;
 };
 
 function filterProps(
@@ -143,9 +142,9 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
           const rp =
             typeof attrs === "function" ? attrs(p) : attrs ? attrs : {};
           const fp = filterProps({ ...rp, ...rest }, shouldForwardProp);
-          const shouldForwardAsChild =
-            config.shouldForwardAsChild && typeof Component !== "string";
-          const Comp = !shouldForwardAsChild && asChild ? Slot : Component;
+          const forwardAsChild =
+            config.forwardAsChild && typeof Component !== "string";
+          const Comp = !forwardAsChild && asChild ? Slot : Component;
           const resClassName = isClassFn ? stringsOrFn(p) : tplClassName;
           return (
             <Comp
@@ -161,7 +160,7 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
                       )
                   : compose(resClassName, classNameProp)
               }
-              asChild={shouldForwardAsChild ? asChild : undefined}
+              asChild={forwardAsChild ? asChild : undefined}
               {...fp}
             />
           );
@@ -196,7 +195,7 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
     },
     {
       get(_, name) {
-        return wrap(name as keyof JSX.IntrinsicElements);
+        return wrap(name as any);
       },
     },
   ) as any as Twc<TCompose>;
