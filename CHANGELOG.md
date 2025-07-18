@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/gregberge/twc/compare/v1.5.0...v1.5.1) (2025-07-18)
+
+
+### Bug Fixes
+
+* avoid forwarding `asChild` prop ([9e3a939](https://github.com/gregberge/twc/commit/9e3a93968617cfeff07fe361a8715f9a573d8aed))
+
 ## [1.5.0](https://github.com/gregberge/twc/compare/v1.4.2...v1.5.0) (2025-06-30)
 
 
