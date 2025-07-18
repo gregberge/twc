@@ -160,7 +160,7 @@ export const createTwc = <TCompose extends AbstractCompose = typeof clsx>(
                       )
                   : compose(resClassName, classNameProp)
               }
-              asChild={forwardAsChild ? asChild : undefined}
+              {...(forwardAsChild ? { asChild } : {})}
               {...fp}
             />
           );
